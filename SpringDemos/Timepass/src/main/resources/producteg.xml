@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="
+    http://www.springframework.org/schema/beans
+    http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+   <bean id="productD" class="com.pack.complexexample.Invoice">
+       <constructor-arg >
+           <bean class="com.pack.complexexample.Product">
+               <constructor-arg name="pid" value="1"/>
+               <constructor-arg name="pname" value="Book"/>
+               <constructor-arg name="price" value="435.88"/>
+           </bean>
+       </constructor-arg>
+   </bean>
+</beans>

@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.0.xsd
+		http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-4.0.xsd">
+
+<!-- Enable AspectJ style of Spring AOP -->
+<aop:aspectj-autoproxy />
+
+<!-- Configure Person Bean and initialize it -->
+<bean name="person" class="com.sample.spring.model.Person">
+	<property name="name" value="Dummy Name"></property>
+</bean>
+
+<!-- Configure PersonService bean -->
+<bean name="personService" class="com.sample.spring.service.PersonService">
+	<property name="person" ref="person"></property>
+</bean>
+
+<!-- Configure Aspect Beans, without this Aspects advices wont execute -->
+<bean name="PersonAspect" class="com.sample.spring.aspect.PersonAspect" />
+<bean name="PersonAspectPointcut" class="com.sample.spring.aspect.PersonAspectPointcut" />
+<bean name="PersonAspectJoinPoint" class="com.sample.spring.aspect.PersonAspectJoinPoint" />
+<bean name="PersonAfterAspect" class="com.sample.spring.aspect.PersonAfterAspect" />
+<bean name="PersonAroundAspect" class="com.sample.spring.aspect.PersonAroundAspect" />
+<bean name="PersonAnnotationAspect" class="com.sample.spring.aspect.PersonAnnotationAspect" />
+<bean name="PersonXMLConfigAspect" class="com.sample.spring.aspect.PersonXMLConfigAspect" />
+
+<!-- Spring AOP XML Configuration -->
+<aop:config>
+	<aop:aspect ref="PersonXMLConfigAspect" id="PersonXMLConfigAspectID" order="1">
+		<aop:pointcut expression="execution(* com.sample.spring.model.Person.getName())" id="getNamePointcut"/>
+		<aop:around method="PersonAroundAdvice" pointcut-ref="getNamePointcut" arg-names="proceedingJoinPoint"/>
+	</aop:aspect>
+</aop:config>
+</beans>

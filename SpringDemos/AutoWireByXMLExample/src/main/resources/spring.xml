@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="
+http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <bean id="dev" class="com.pack.myexample.model.Dev" autowire="byType">
+    </bean>
+
+    <bean id="cal" class="com.pack.myexample.impl.CalcProgram" >
+    </bean>
+
+    <bean id="jvm" class="com.pack.myexample.impl.Jvm" primary="true">
+    </bean>
+
+    <bean id="customer" class="sample.autowirebyName.model.Customer" autowire="byName">
+        <property name="custid" value="12"/>
+        <property name="name" value="Vidya Suthar"/>
+<!--        and instead of <property name="orders" ref="orders">  we use autowiring-->
+    </bean>
+
+    <bean id="order1" class="sample.autowirebyName.model.Order">
+        <property name="orderid" value="7869">
+        </property>
+        <property name="orderDetails" value="The product is long lasting">
+        </property>
+        <property name="qty" value="3"> </property>
+    </bean>
+
+    <bean id="order2" class="sample.autowirebyName.model.Order">
+        <property name="orderid" value="34445">
+        </property>
+        <property name="orderDetails" value="The Product is durable">
+        </property>
+        <property name="qty" value="12"> </property>
+    </bean>
+
+</beans>

@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans.xsd">
+        <bean id="bookcollection" class="com.pack.model.BookCollection">
+         <property name="myList">
+		 <list>
+	       <value>List Value A</value>
+	       <value>List Value B</value>
+	     </list>
+      	</property>
+	      <property name="mySet">
+	        <set>
+	            <value>Set Value A</value>
+	            <value>Set Value B</value>
+	        </set>
+	      </property>
+	      <property name="myMap">
+		     <map>
+	            <entry key="0" value="Map Value A"/>           
+	            <entry key="1" value="Map Value B"/>
+	         </map>
+	      </property>
+	      <property name="myProp">
+			 <props>
+		       <prop key="propKeyA">Prop Value A</prop>
+		       <prop key="propKeyB">Prop Value B</prop>
+		     </props>
+	      </property>      
+	      <property name="bookList">
+	      	<list>
+	      		<ref bean="book1"/>
+	      		<ref bean="book2"/>
+	      	</list>
+	      </property>
+	    </bean>
+	    
+	    <bean id="book1" class="com.pack.model.Book">
+	        <property name="bookId" value="1101"/>
+	    	<property name="bookName" value="Geetanjali"/>
+	    </bean>
+	    <bean id="book2" class="com.pack.model.Book">
+	        <property name="bookId" value="1102"/>
+	    	<property name="bookName" value="Third War"/>
+	    </bean>
+        
+       
+        </beans>

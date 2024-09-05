@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="
+        http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <bean id="demo1" class="com.pack.myexample.Greet" >
+        <property name="msg" value="Hi Participants"/>
+    </bean>
+
+    <bean id="demo2" class="com.pack.myexample.ObjExample">
+        <constructor-arg index="0" value="677"/>
+        <constructor-arg index="1" value="new value"/>
+
+<!--        OR-->
+
+<!--        <constructor-arg  name="id">
+                <value>1</value>
+            </constructor-arg>-->
+
+
+    </bean>
+
+
+    <bean id="demo3" class="com.pack.myexample.Student">
+        <property name="sid">
+            <value>1</value>
+        </property>
+
+        <property name="sname">
+            <value>Kaustubh</value>
+        </property>
+        <property name="scourse">
+            <value>JAVA spring</value>
+        </property>
+    </bean>
+</beans>
