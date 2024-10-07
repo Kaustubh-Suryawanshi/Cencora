@@ -1,0 +1,103 @@
+database:
+
+
+create database Train_reservation;
+use Train_reservation;
+create table Users(user_id int not null auto_increment ,first_name varchar(45),last_name varchar(45) ,email varchar(45),password varchar(45), phone varchar(45),user_role enum('passenger','admin'),primary key(user_id));
+INSERT INTO Users (first_name, last_name, email, password, phone, user_role) VALUES
+('John', 'Doe', 'john.doe@example.com', 'password123', '123-456-7890', 'passenger'),
+('Jane', 'Smith', 'jane.smith@example.com', 'securepass', '987-654-3210', 'admin'),
+('Alice', 'Johnson', 'alice.johnson@example.com', 'alicepass', '555-555-5555', 'passenger'),
+('Bob', 'Brown', 'bob.brown@example.com', 'bobpassword', '444-444-4444', 'passenger'),
+('Charlie', 'Davis', 'charlie.davis@example.com', 'charliepass', '333-333-3333', 'admin'),
+('Daniel', 'Wilson', 'daniel.wilson@example.com', 'danielpass', '222-222-2222', 'passenger'),
+('Eve', 'Miller', 'eve.miller@example.com', 'evepass', '111-111-1111', 'admin'),
+('Frank', 'Garcia', 'frank.garcia@example.com', 'frankpass', '999-999-9999', 'passenger');
+
+
+CREATE TABLE Trains (
+    train_id INT AUTO_INCREMENT PRIMARY KEY,
+    train_no varchar(20),
+    train_name VARCHAR(100) NOT NULL,
+    total_seats INT NOT NULL,
+    available_seats INT NOT NULL
+);
+
+CREATE TABLE Routes (
+    route_id INT AUTO_INCREMENT PRIMARY KEY,
+    train_id INT,
+    from_source VARCHAR(100) NOT NULL,
+    to_destination VARCHAR(100) NOT NULL,
+    departure_date DATE NOT NULL,
+    arrival_date DATE NOT NULL,
+    departure_time TIME NOT NULL,
+    arrival_time TIME NOT NULL,
+    distance int,
+    cost_per_km double,
+    FOREIGN KEY (train_id) REFERENCES Trains(train_id)
+);
+
+
+
+
+
+
+
+
+CREATE TABLE Passengers (
+    passenger_id INT AUTO_INCREMENT PRIMARY KEY,
+    booking_id INT,
+    name VARCHAR(100) NOT NULL,
+    age INT NOT NULL,
+    gender ENUM('Male', 'Female', 'Other') NOT NULL,
+    status enum('confirmed','cancelled'),
+    FOREIGN KEY (booking_id) REFERENCES Bookings(booking_id) ON DELETE CASCADE
+);
+
+
+INSERT INTO Passengers (booking_id, name, age, gender, status) VALUES
+(1, 'Alice Smith', 30, 'Female', 'confirmed'),  -- Booking 1
+(1, 'Bob Johnson', 32, 'Male', 'confirmed'),    -- Booking 1
+
+(2, 'Charlie Brown', 28, 'Male', 'confirmed'),  -- Booking 2
+(2, 'David Wilson', 25, 'Male', 'confirmed'),   -- Booking 2
+(2, 'Eva Davis', 22, 'Female', 'confirmed'),    -- Booking 2
+
+(3, 'Fiona Green', 27, 'Female', 'confirmed'),   -- Booking 3
+
+(4, 'George Harris', 40, 'Male', 'confirmed'),   -- Booking 4
+(4, 'Hannah Martin', 35, 'Female', 'confirmed'), -- Booking 4
+(4, 'Ian Thompson', 50, 'Male', 'confirmed'),    -- Booking 4
+(4, 'Jasmine Clark', 29, 'Female', 'confirmed'), -- Booking 4
+
+(5, 'Kurt Lee', 24, 'Male', 'confirmed'),         -- Booking 5
+(5, 'Laura White', 31, 'Female', 'confirmed'),    -- Booking 5
+
+(6, 'Mike Brown', 22, 'Male', 'confirmed'),       -- Booking 6
+(6, 'Nina Adams', 26, 'Female', 'confirmed'),     -- Booking 6
+(6, 'Oliver King', 29, 'Male', 'confirmed');     -- Booking 6
+
+
+CREATE TABLE Bookings (
+    booking_id INT AUTO_INCREMENT PRIMARY KEY,
+    user_id INT,
+    route_id INT,
+    booking_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    seats_booked INT NOT NULL,
+    FOREIGN KEY (user_id) REFERENCES Users(user_id),
+    FOREIGN KEY (route_id) REFERENCES Routes(route_id)
+);
+
+INSERT INTO Bookings (user_id, route_id, seats_booked) VALUES
+(1, 1, 2),  -- User 1 books 2 seats for Route 1
+(2, 2, 3),  -- User 2 books 3 seats for Route 2
+(3, 3, 1),  -- User 3 books 1 seat for Route 3
+(1, 4, 4),  -- User 1 books 4 seats for Route 4
+(2, 5, 2),  -- User 2 books 2 seats for Route 5
+(3, 1, 5);  -- User 3 books 5 seats for Route 1
+
+
+
+
+
+
