@@ -97,7 +97,51 @@ INSERT INTO Bookings (user_id, route_id, seats_booked) VALUES
 (3, 1, 5);  -- User 3 books 5 seats for Route 1
 
 
+LatestUpdated Tables:
 
+user is same
+
+train:
+CREATE TABLE Trains (
+    train_id INT AUTO_INCREMENT PRIMARY KEY,
+    train_no VARCHAR(20),
+    train_name VARCHAR(100) NOT NULL,
+    from_source VARCHAR(100) NOT NULL,
+    to_destination VARCHAR(100) NOT NULL,
+    departure_date DATE NOT NULL,
+    arrival_date DATE NOT NULL,
+    departure_time TIME NOT NULL,
+    arrival_time TIME NOT NULL,
+    total_seats INT NOT NULL,
+    available_seats INT NOT NULL,
+    amount_per_seat DOUBLE
+);
+
+INSERT INTO Trains (train_no, train_name, from_source, to_destination, departure_date, arrival_date, departure_time, arrival_time, total_seats, available_seats, amount_per_seat) VALUES
+('12345', 'Rajdhani Express', 'Delhi', 'Mumbai', '2024-10-10', '2024-10-10', '10:00:00', '20:00:00', 1000, 200, 1500.00),
+('23456', 'Shatabdi Express', 'Delhi', 'Amritsar', '2024-10-11', '2024-10-11', '06:00:00', '11:00:00', 800, 150, 1200.00),
+('34567', 'Duronto Express', 'Mumbai', 'Kolkata', '2024-10-12', '2024-10-13', '15:00:00', '09:00:00', 900, 300, 2000.00),
+('45678', 'Jan Shatabdi', 'Bangalore', 'Chennai', '2024-10-13', '2024-10-13', '05:30:00', '09:00:00', 600, 100, 800.00),
+('56789', 'Nanda Devi Express', 'Dehradun', 'Delhi', '2024-10-14', '2024-10-14', '20:00:00', '23:30:00', 700, 250, 1000.00),
+('67890', 'Garib Rath', 'Patna', 'Gaya', '2024-10-15', '2024-10-15', '12:00:00', '14:00:00', 500, 75, 600.00),
+('78901', 'Maharajas Express', 'Jaipur', 'Agra', '2024-10-16', '2024-10-16', '14:30:00', '17:30:00', 100, 20, 2500.00),
+('89012', 'Kashi Vishwanath Express', 'Varanasi', 'Lucknow', '2024-10-17', '2024-10-17', '06:15:00', '10:15:00', 400, 60, 900.00),
+('90123', 'Goa Express', 'Mumbai', 'Goa', '2024-10-18', '2024-10-18', '22:00:00', '06:00:00', 650, 120, 1200.00),
+('01234', 'Kolkata Mail', 'Kolkata', 'Delhi', '2024-10-19', '2024-10-20', '23:00:00', '09:00:00', 800, 180, 1400.00);
+
+
+bookings:	
+CREATE TABLE train_reservation.bookings (
+    booking_id INT AUTO_INCREMENT PRIMARY KEY,
+    user_id INT,
+    train_id INt,
+    passenger_name VARCHAR(100),
+    passenger_age INT,
+    passenger_gender VARCHAR(10),
+    booking_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+	FOREIGN KEY (user_id) REFERENCES Users(user_id) ON DELETE CASCADE ON UPDATE CASCADE,
+    FOREIGN KEY (train_id) REFERENCES trains(train_id) ON DELETE CASCADE ON UPDATE CASCADE
+);
 
 
 
