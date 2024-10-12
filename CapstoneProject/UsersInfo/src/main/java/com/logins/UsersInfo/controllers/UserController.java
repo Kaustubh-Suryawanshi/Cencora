@@ -1,5 +1,6 @@
 package com.logins.UsersInfo.controllers;
 
+import com.logins.UsersInfo.response.BookingDTO;
 import com.logins.UsersInfo.response.BookingResponse;
 import com.logins.UsersInfo.response.UserResponseWithBooking;
 import com.logins.UsersInfo.service.UserService;
@@ -22,14 +23,14 @@ public class UserController {
         return ResponseEntity.status(HttpStatus.CREATED).body( userResponseWithBooking.getBookingResponseList());
     }
 
-    /*@PostMapping("/booking/add/{user_id}")
-    public String addBookingDetails(@PathVariable int user_id){
-        if(userService.addBookingDetails(user_id)!=null){
+    @PostMapping("/booking/add/{user_id}")
+    public String addBookingDetails(@PathVariable int user_id,@RequestBody BookingDTO bookingDTO){
+        if(userService.addBookingDetails(user_id,bookingDTO)!=null){
             return "booking added";
         }
         return "not added";
 
-    }*/
+    }
 
 
 }

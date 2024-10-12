@@ -21,9 +21,8 @@ public class BookingService {
     @Autowired
     private TrainRepo trainRepo;
 
-    public BookingResponse addBookingDetails(Booking booking) {
-        Trains train = booking.getTrain();
-        Optional<Trains> managedTrain = trainRepo.findById(train.getTrain_id());
+    public BookingResponse addBookingDetails(int train_id,Booking booking) {
+        Optional<Trains> managedTrain = trainRepo.findById(train_id);
         managedTrain.get().setAvailable_seats(managedTrain.get().getAvailable_seats()-1);
         booking.setTrain(managedTrain.orElse(null));
         return BookingResponse.MapToBookingResponse(bookingRepo.save(booking));

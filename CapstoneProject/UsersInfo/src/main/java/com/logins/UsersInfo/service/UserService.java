@@ -2,13 +2,11 @@ package com.logins.UsersInfo.service;
 
 import com.logins.UsersInfo.entity.User;
 import com.logins.UsersInfo.repository.UserRepo;
-import com.logins.UsersInfo.response.BookingResponse;
-import com.logins.UsersInfo.response.LogInDTO;
-import com.logins.UsersInfo.response.UserResponse;
-import com.logins.UsersInfo.response.UserResponseWithBooking;
+import com.logins.UsersInfo.response.*;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.reactive.function.client.WebClient;
 import reactor.core.publisher.Mono;
 
@@ -68,5 +66,14 @@ public class UserService {
                 .collectList();
         userResponseWithBooking.setBookingResponseList(bookingResponseList);
         return userResponseWithBooking;
+    }
+
+    public BookingResponse addBookingDetails(int userId, BookingDTO bookingDTO) {
+        bookingDTO.setUser_id(userId);
+        return webClient.post().uri("/booking/addBooking")
+                .bodyValue(bookingDTO)
+                .retrieve()
+                .bodyToMono(BookingResponse.class).block();
+
     }
 }

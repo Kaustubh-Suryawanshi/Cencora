@@ -3,6 +3,7 @@ package com.pack.trainBookings.controller;
 
 import com.pack.trainBookings.entity.Booking;
 import com.pack.trainBookings.entity.Trains;
+import com.pack.trainBookings.response.BookingDTO;
 import com.pack.trainBookings.response.BookingResponse;
 import com.pack.trainBookings.service.BookingService;
 import org.hibernate.annotations.CurrentTimestamp;
@@ -23,15 +24,15 @@ public class BookingController {
 
 //    add booking details when user books Ticket
     @PostMapping("/addBooking")
-    public BookingResponse addBooking(@PathVariable int user_id,@RequestBody BookingResponse bookingResponse){
+    public BookingResponse addBooking(@RequestBody BookingDTO bookingDTO){
         Booking booking=new Booking();
-        booking.setPassenger_name(bookingResponse.getPassenger_name());
-        booking.setPassenger_age(bookingResponse.getPassenger_age());
+        booking.setPassenger_name(bookingDTO.getPassenger_name());
+        booking.setPassenger_age(bookingDTO.getPassenger_age());
+        booking.setPassenger_gender(bookingDTO.getPassenger_gender());
         booking.setBooking_date(LocalDateTime.now());
-        booking.setUser_id(user_id);
-        Trains train=booking.getTrain();
-        if(train==null) return null;
-        return bookingService.addBookingDetails(booking);
+        booking.setUser_id(bookingDTO.getUser_id());
+        int train_id=bookingDTO.getTrain_id();
+        return bookingService.addBookingDetails(train_id,booking);
     }
 
 //    show booking details using booking_id (no use)
