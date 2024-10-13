@@ -34,7 +34,6 @@ public class BookingService {
     }
 
     public List<BookingResponse> getBookingDetailsByUserId(int user_id) {
-
         List<BookingResponse> bookingResponseList =bookingRepo.getBookingDetailsByUserId(user_id).stream().
                                                     map(BookingResponse::MapToBookingResponse).
                                                     collect(Collectors.toList());

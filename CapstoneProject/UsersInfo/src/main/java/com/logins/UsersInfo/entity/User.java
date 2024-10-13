@@ -5,6 +5,8 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+
+
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
@@ -25,8 +27,8 @@ public class User {
     private String password;
     @Column(name = "phone")
     private String phone;
-    @Column(name = "user_role")
-    private String user_role;
+    @Column(name = "user_role" , nullable = false)
+    private String  user_role="passenger";
 
 
 }

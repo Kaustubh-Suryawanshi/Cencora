@@ -18,6 +18,7 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping("/booking")
+@CrossOrigin(origins = "http://localhost:5173")
 public class BookingController {
     @Autowired
     BookingService bookingService;
@@ -42,7 +43,7 @@ public class BookingController {
     }
 
 //    show bookings using user_id
-    @GetMapping("/search/{user_id}")
+    @GetMapping("/get/{user_id}")
     public ResponseEntity<List<BookingResponse>> getBookingDetailsByUserId(@PathVariable int user_id){
         List<BookingResponse> bookingResponseList=bookingService.getBookingDetailsByUserId(user_id);
         return ResponseEntity.ok(bookingResponseList!=null?bookingResponseList:null);

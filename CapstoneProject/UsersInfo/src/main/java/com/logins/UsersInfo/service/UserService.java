@@ -6,7 +6,6 @@ import com.logins.UsersInfo.response.*;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.reactive.function.client.WebClient;
 import reactor.core.publisher.Mono;
 
@@ -23,7 +22,7 @@ public class UserService {
     private WebClient webClient;
 
 
-    public List<UserResponse> getAllusers(){
+    /*public List<UserResponse> getAllusers(){
         UserResponse userResponse;
         List<User> allusers= userRepo.findAll();
         List<UserResponse> userResponses=new ArrayList<>();
@@ -32,10 +31,11 @@ public class UserService {
              userResponses.add(userResponse);
         }
         return userResponses;
-    }
+    }*/
 
-    public void addUserDetails(User user){
-        userRepo.save(user);
+    public UserResponse addUserDetails(User user){
+        User userRes= userRepo.save(user);
+        return modelMapper.map(userRes, UserResponse.class);
     }
 
     public UserResponse getSingleuserById(int id){
@@ -46,16 +46,18 @@ public class UserService {
 
 
 
-    public boolean authenthenticateUser(LogInDTO logInDTO) {
-        String email=logInDTO.getEmail();
-        if(userRepo.findByEmail(email)!=null && userRepo.findByEmail(email).getPassword().equals( logInDTO.getPassword())){
-            return true;
+    public UserResponse authenthenticateUser(LogInDTO logInDTO) {
+        User user=userRepo.findByEmail(logInDTO.getEmail());
+        if(user!=null &&
+                user.getPassword().equals(logInDTO.getPassword())
+                && user.getUser_role().equals(logInDTO.getRole())){
+            return modelMapper.map(user, UserResponse.class);
         }
-        return false;
+        return null;
 
     }
 
-    public UserResponseWithBooking getBookingDetailsByUserId(int user_id){
+    /*public UserResponseWithBooking getBookingDetailsByUserId(int user_id){
         Mono<List<BookingResponse>> bookingResponseList;
         UserResponseWithBooking userResponseWithBooking=new UserResponseWithBooking();
         userResponseWithBooking.setUser_id(user_id);
@@ -66,7 +68,7 @@ public class UserService {
                 .collectList();
         userResponseWithBooking.setBookingResponseList(bookingResponseList);
         return userResponseWithBooking;
-    }
+    }*/
 
     public BookingResponse addBookingDetails(int userId, BookingDTO bookingDTO) {
         bookingDTO.setUser_id(userId);

@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
+@CrossOrigin(origins = "http://localhost:5173")
 public class LoginController {
     @Autowired
     private UserService userService;
@@ -19,18 +20,17 @@ public class LoginController {
 
 
     //all user details(no usr)
-    @GetMapping("/allusers")
+    /*@GetMapping("/allusers")
     public ResponseEntity<List<UserResponse>> getaAllUserDetails(){
         List<UserResponse> userResponses= userService.getAllusers();
         return ResponseEntity.status(HttpStatus.CREATED).body(userResponses);
-    }
+    }*/
 
     //add new user
     @PostMapping("/register")
-    public ResponseEntity<List<UserResponse>>  addNewuser(@RequestBody User user){
+    public ResponseEntity<UserResponse>  addNewuser(@RequestBody User user){
 //        validtion that user is new
-        userService.addUserDetails(user);
-        return ResponseEntity.status(HttpStatus.CREATED).body(userService.getAllusers());
+        return ResponseEntity.status(HttpStatus.CREATED).body(userService.addUserDetails(user));
     }
 
 //    get user by id
@@ -41,12 +41,12 @@ public class LoginController {
     }
 
     @PostMapping("/login")
-    public ResponseEntity<String> authenTicateuser(@RequestBody LogInDTO logInDTO){
-        boolean isAuthenticated=userService.authenthenticateUser(logInDTO);
-        String msg;
+    public ResponseEntity<UserResponse> authenTicateuser(@RequestBody LogInDTO logInDTO){
+        UserResponse isAuthenticated=userService.authenthenticateUser(logInDTO);
+        /*String msg;
         if(isAuthenticated)  msg="Login successful";
-        else msg="Invalid credentials";
-        return ResponseEntity.status(HttpStatus.CREATED).body(msg);
+        else msg="Invalid credentials";*/
+        return ResponseEntity.status(HttpStatus.CREATED).body(isAuthenticated==null?null:isAuthenticated);
     }
 
 

@@ -16,6 +16,7 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping("/train")
+@CrossOrigin(origins = "http://localhost:5173")
 public class TrainController {
     @Autowired
     private TrainService trainService;
