@@ -94,18 +94,3 @@ strong {
     background-color: #0056b3;
 }
 
-@media (max-width: 768px) {
-    .train-details, .train-footer {
-        flex-direction: column;
-        text-align: left;
-    }
-
-    .train-journey-time {
-        margin: 10px 0;
-    }
-
-    .train-book {
-        text-align: center;
-        margin-top: 10px;
-    }
-}

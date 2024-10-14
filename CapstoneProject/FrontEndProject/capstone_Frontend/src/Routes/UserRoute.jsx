@@ -16,6 +16,7 @@ const UserRoute = () => {
                 <Route path="/" element={<LoginPage />} />
                 <Route path="/signup" element={<SignupPage />} />
                 <Route path="/user/addBooking/:tid" element={<PassengerDetails/>}/>
+                {/* <Route path="/user/profile" element={<ProfileDetails/>}/> */}
             </Routes>
 
             <TrainProvider>

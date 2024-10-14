@@ -6,13 +6,11 @@ import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
-import java.util.ArrayList;
-import java.util.List;
 
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class TrainResponseForAdmin {
+public class TrainResponse {
     private int train_id;
     private String train_no;
     private String train_name;

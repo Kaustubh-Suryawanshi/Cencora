@@ -2,41 +2,59 @@ package com.pack.trainBookings.service;
 
 import com.pack.trainBookings.entity.Trains;
 import com.pack.trainBookings.repository.TrainRepo;
-import com.pack.trainBookings.response.TrainResponseForUser;
+import com.pack.trainBookings.response.TrainResponse;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-import static com.pack.trainBookings.response.TrainResponseForUser.mapObjecttoTrainresponse;
 
 @Service
 public class TrainService {
     @Autowired
     private TrainRepo trainRepo;
 
-
+    @Autowired
+    ModelMapper modelMapper;
     public List<Trains> getAllTrains(){
         List<Trains> response=trainRepo.findAll();
 
         return response;
     }
 
-    public List<TrainResponseForUser> getTrainsUsingSrcDesDate(String src, String des, LocalDate dep_date){
-        List<Object[]> response=trainRepo.getTrainsWithSrcDesDate( src,  des,  dep_date);
-        return mapObjecttoTrainresponse(response);
+
+    public List<TrainResponse> getTrainsUsingSrcDes(String src, String des, LocalDate dep_date){
+        List<Trains> response=trainRepo.getTrainsWithSrcDesDateAdmin( src,  des,  dep_date);
+        List<TrainResponse> trainResponseList =new ArrayList<>();
+        for(Trains t:response){
+            TrainResponse trainResponse =modelMapper.map(t, TrainResponse.class);
+            trainResponseList.add(trainResponse);
+        }
+        return trainResponseList;
     }
 
-    public List<TrainResponseForUser> getTrainByName(String name) {
-        List<Object[]> response=trainRepo.getTrainsWithName(name);
-        return mapObjecttoTrainresponse(response);
+    public List<TrainResponse> getTrainByName(String name) {
+        List<Trains> response=trainRepo.getTrainsWithName(name);
+        List<TrainResponse> trainResponseList =new ArrayList<>();
+        for(Trains t:response){
+            TrainResponse trainResponse =modelMapper.map(t, TrainResponse.class);
+            trainResponseList.add(trainResponse);
+        }
+        return trainResponseList;
     }
 
-    public List<TrainResponseForUser> getTrainByNumber(String number) {
-        List<Object[]> response=trainRepo.getTrainsWithNumber(number);
-        return mapObjecttoTrainresponse(response);
+    public List<TrainResponse> getTrainByNumber(String number) {
+        List<Trains> response=trainRepo.getTrainsWithNumber(number);
+        List<TrainResponse> trainResponseList =new ArrayList<>();
+        for(Trains t:response){
+            TrainResponse trainResponse =modelMapper.map(t, TrainResponse.class);
+            trainResponseList.add(trainResponse);
+        }
+        return trainResponseList;
     }
 
     public Trains addTrainDetails(Trains train) {
@@ -51,10 +69,10 @@ public class TrainService {
         Optional<Trains> updateTrain=trainRepo.findById(id);
         if(updateTrain.isPresent()) {
             Trains train=updateTrain.get();
-            if(traindetailsToUpdate.getTrain_no() !=null && trainRepo.getTrainsWithNumber(traindetailsToUpdate.getTrain_no()).isEmpty()) {
+            if(traindetailsToUpdate.getTrain_no() !=null ) {
                 train.setTrain_no(traindetailsToUpdate.getTrain_no());
             }
-            if(traindetailsToUpdate.getTrain_name() !=null && trainRepo.getTrainsWithName(traindetailsToUpdate.getTrain_name()).isEmpty()) {
+            if(traindetailsToUpdate.getTrain_name() !=null ) {
                 train.setTrain_name(traindetailsToUpdate.getTrain_name());
             }
             if(traindetailsToUpdate.getFrom_source() !=null) train.setFrom_source(traindetailsToUpdate.getFrom_source());
@@ -71,11 +89,26 @@ public class TrainService {
         return null;
     }
 
-    public List<Trains> deleteTrain(int id) {
+    public List<TrainResponse> deleteTrain(int id) {
+        List<TrainResponse> trainResponseList=new ArrayList<>();
         if(trainRepo.findById(id).isPresent()){
             trainRepo.deleteById(id);
-            return trainRepo.findAll();
+            List<Trains>trains= trainRepo.findAll();
+            for(Trains t:trains){
+                trainResponseList.add(modelMapper.map(t, TrainResponse.class));
+            }
+            return trainResponseList;
         }
         return null;
+    }
+
+    public TrainResponse getTrainById(int trainId) {
+        Optional<Trains> optional=trainRepo.findById(trainId);
+        if(optional.isPresent()){
+            Trains train=optional.get();
+            return modelMapper.map(train, TrainResponse.class);
+        }
+        return null;
+
     }
 }

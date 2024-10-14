@@ -2,8 +2,7 @@ package com.pack.trainBookings.controller;
 
 
 import com.pack.trainBookings.entity.Trains;
-import com.pack.trainBookings.response.TrainResponseForAdmin;
-import com.pack.trainBookings.response.TrainResponseForUser;
+import com.pack.trainBookings.response.TrainResponse;
 import com.pack.trainBookings.service.TrainService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -12,10 +11,9 @@ import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
 import java.util.List;
-import java.util.Optional;
 
 @RestController
-@RequestMapping("/train")
+@RequestMapping("/trains")
 @CrossOrigin(origins = "http://localhost:5173")
 public class TrainController {
     @Autowired
@@ -30,53 +28,36 @@ public class TrainController {
 
 //    get trains by src/des and dep date
 //    localhost:8080/trains?src=delhi&des=mumbai&date=2024-10-11
-        @GetMapping("/search/listoftrains")
-        public ResponseEntity<List<TrainResponseForUser>> getDetails(@RequestParam String src, @RequestParam String des, @RequestParam String date){
+        @GetMapping("/search")
+        public ResponseEntity<List<TrainResponse>> getDetails(@RequestParam String src, @RequestParam String des, @RequestParam String date){
             LocalDate localDate= LocalDate.parse(date);
-            List<TrainResponseForUser> trainResponseForUser =trainService.getTrainsUsingSrcDesDate(src,des,localDate);
-            if(trainResponseForUser.size()==0) return null;
-           return ResponseEntity.status(HttpStatus.CREATED).body(trainResponseForUser);
+            List<TrainResponse> trainResponse =trainService.getTrainsUsingSrcDes(src,des,localDate);
+            if(trainResponse.size()==0) return null;
+           return ResponseEntity.status(HttpStatus.CREATED).body(trainResponse);
         }
 
 
 
 //    get trains by name
     @GetMapping("/search/trainbyname")
-    public ResponseEntity<List<TrainResponseForUser>> getbyName(@RequestParam String name){
-        List<TrainResponseForUser> trainResponsForUsers = trainService.getTrainByName(name);
-        return ResponseEntity.status(HttpStatus.CREATED).body(trainResponsForUsers);
+    public ResponseEntity<List<TrainResponse>> getbyName(@RequestParam String name){
+        List<TrainResponse> trainResponses = trainService.getTrainByName(name);
+        return ResponseEntity.status(HttpStatus.CREATED).body(trainResponses);
     }
 
 //    get trains by train number
     @GetMapping("/search/trainbynumber")
-    public ResponseEntity<List<TrainResponseForUser>> getbyNumber(@RequestParam String number){
-        List<TrainResponseForUser> trainResponsForUsers = trainService.getTrainByNumber(number);
-        return ResponseEntity.status(HttpStatus.CREATED).body(trainResponsForUsers);
+    public ResponseEntity<List<TrainResponse>> getbyNumber(@RequestParam String number){
+        List<TrainResponse> trainResponses = trainService.getTrainByNumber(number);
+        return ResponseEntity.status(HttpStatus.CREATED).body(trainResponses);
     }
+//    get by train_id
+@GetMapping("/search/trainbyid/{train_id}")
+public ResponseEntity<TrainResponse> getbyNumber(@PathVariable int train_id){
+    TrainResponse trainResponse = trainService.getTrainById(train_id);
+    return ResponseEntity.status(HttpStatus.CREATED).body(trainResponse==null?null:trainResponse);
+}
 
-//    add new train(admin only)
-    @PostMapping("/add")
-    public ResponseEntity<Trains> addTrain(@RequestBody Trains train){
-        Trains trains= trainService.addTrainDetails(train);
-        return ResponseEntity.status(HttpStatus.CREATED).body(trains);
-    }
-//    delete train(admin only)
-//    @PostMapping("/trains/delete")
-    @PostMapping("/delete/{id}")
-    public ResponseEntity<List<Trains>> deleteTrain(@PathVariable int id){
-        List<Trains> res= trainService.deleteTrain(id);
-        return ResponseEntity.status(HttpStatus.CREATED).body(res!=null?res:null);
-    }
-//    update train details(admin only)
-    @PatchMapping("/update/{id}")
-    public ResponseEntity<Optional<Trains>> updateTrain(@PathVariable int id, @RequestBody Trains train){
-        Optional<Trains> res= trainService.updateTrains(id,train);
-        return ResponseEntity.status(HttpStatus.CREATED).body(res!=null?res:null);
-    }
-//    get trains for admin
-    /*@GetMapping("/adminsearch")
-    public ResponseEntity<TrainResponseForAdmin> getTrainDetailsForAdmin(){
 
-    }*/
 
 }

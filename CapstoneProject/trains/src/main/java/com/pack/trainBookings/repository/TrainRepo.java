@@ -11,14 +11,17 @@ import java.util.List;
 
 @Repository
 public interface TrainRepo extends JpaRepository<Trains,Integer> {
-    String selectExpectTotalSeats ="SELECT t.train_id,t.train_no, t.train_name,t.from_source, t.to_destination, t.departure_date,t.arrival_date,t.departure_time,t.arrival_time,t.available_seats,t.amount_per_seat FROM Trains t";
+    String select="select t from Trains t";
 
-    @Query(selectExpectTotalSeats +" WHERE (t.from_source = :src)" +"AND (t.to_destination = :des) " +"AND t.departure_date = :dep_date")
-    List<Object[]> getTrainsWithSrcDesDate(String src, String des, LocalDate dep_date);
+    @Query(select +" WHERE (t.from_source = :src)" +"AND (t.to_destination = :des) " +"AND t.departure_date = :dep_date")
+    List<Trains> getTrainsWithSrcDesDate(String src, String des, LocalDate dep_date);
 
-    @Query(selectExpectTotalSeats +" WHERE t.train_name=:name")
-    List<Object[]> getTrainsWithName(@Param("name") String name);
+    @Query(select +" WHERE t.train_name=:name")
+    List<Trains> getTrainsWithName(@Param("name") String name);
 
-    @Query(selectExpectTotalSeats +" WHERE t.train_no=:number")
-    List<Object[]> getTrainsWithNumber(String number);
+    @Query(select +" WHERE t.train_no=:number")
+    List<Trains> getTrainsWithNumber(String number);
+
+    @Query(select +" Where (t.from_source = :src) AND (t.to_destination = :des)  AND t.departure_date = :dep_date AND t.total_seats > t.available_seats")
+    List<Trains> getTrainsWithSrcDesDateAdmin(String src, String des, LocalDate dep_date);
 }
