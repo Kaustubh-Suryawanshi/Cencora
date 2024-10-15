@@ -1,18 +1,20 @@
 import React, { useContext, useEffect, useState } from 'react';
 import TrainTile from './Traintile'; // Import the TrainTile component
 import { TrainContext } from '../Context/TrainContext';
-import Navbar from '../Components/Navbar'
+
 
 const TrainList = () => {
-    const { trains } = useContext(TrainContext);
+    const { trains,setTrains } = useContext(TrainContext);
+    useEffect(() => {
+        setTrains(trains);
+      }, [trains]);
 
     return (
         <>
-            <Navbar />
             <div>
                 {trains.length > 0 ? (
                     trains.map((train) => (
-                        <TrainTile key={train.train_id} train={train} />
+                        <TrainTile key={train.train_id} train={train} updateTrains={setTrains}/>
                     ))
                 ) : (
                     <p>No trains found for the selected criteria.</p>

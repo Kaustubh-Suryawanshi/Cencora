@@ -2,7 +2,7 @@ import React, { useState,useContext, useEffect } from 'react'
 import { UserContext } from '../Context/UserContext'
 import { useNavigate, useParams } from 'react-router-dom';
 import axios from 'axios';
-// import { BookingDetailsContext } from '../Context/BookingDetailsContext';
+
 import '../styles/passenger.css'
 
 const PassengerDetails = () => {

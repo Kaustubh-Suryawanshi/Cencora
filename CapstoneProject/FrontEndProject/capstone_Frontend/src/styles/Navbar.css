@@ -4,12 +4,15 @@
     justify-content: space-between;
     align-items: center;
     padding: 10px 20px;
-    background-color: #007bff;
+    background-color: #21364d;
     color: white;
+    width: auto;
+    border-radius: 5px;
   }
   
   .navbar-left h3 {
     margin: 0;
+    color: white;
   }
   
   .navbar-right {
@@ -18,27 +21,14 @@
   }
   
   .navbar-right .nav-link {
-    margin-right: 15px;
+    margin-right: 30px;
     color: white;
-    text-decoration: none;
+    text-decoration: dashed;
     font-size: 16px;
   }
   
   .navbar-right .nav-link:hover {
     text-decoration: underline;
   }
-  
-  .logout-btn {
-    background-color: #ff4d4d;
-    border: none;
-    padding: 8px 12px;
-    color: white;
-    cursor: pointer;
-    font-size: 16px;
-    border-radius: 4px;
-  }
-  
-  .logout-btn:hover {
-    background-color: #ff1a1a;
-  }
+
   

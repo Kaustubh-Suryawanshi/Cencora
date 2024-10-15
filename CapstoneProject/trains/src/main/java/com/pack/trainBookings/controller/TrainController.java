@@ -20,8 +20,9 @@ public class TrainController {
     private TrainService trainService;
 //    get all trains(no use)
     @GetMapping("/search/alltrains")
-    public ResponseEntity<List<Trains>> getdetails(){
-        List<Trains> trainResponse=trainService.getAllTrains();
+    public ResponseEntity<List<TrainResponse>> getdetails(){
+        List<TrainResponse> trainResponse=trainService.getAllTrains();
+
         return ResponseEntity.status(HttpStatus.CREATED).body(trainResponse);
     }
 
@@ -35,6 +36,14 @@ public class TrainController {
             if(trainResponse.size()==0) return null;
            return ResponseEntity.status(HttpStatus.CREATED).body(trainResponse);
         }
+
+    @GetMapping("/dynamicsearch")
+    public ResponseEntity<List<TrainResponse>> getDetailsDynamically(@RequestParam String src, @RequestParam String des, @RequestParam String date){
+        LocalDate localDate= LocalDate.parse(date);
+        List<TrainResponse> trainResponse =trainService.getTrainsUsingSrcDesDynamic(src,des,localDate);
+        if(trainResponse.size()==0) return null;
+        return ResponseEntity.status(HttpStatus.CREATED).body(trainResponse);
+    }
 
 
 

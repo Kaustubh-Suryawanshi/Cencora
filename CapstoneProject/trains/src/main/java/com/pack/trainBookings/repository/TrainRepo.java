@@ -24,4 +24,7 @@ public interface TrainRepo extends JpaRepository<Trains,Integer> {
 
     @Query(select +" Where (t.from_source = :src) AND (t.to_destination = :des)  AND t.departure_date = :dep_date AND t.total_seats > t.available_seats")
     List<Trains> getTrainsWithSrcDesDateAdmin(String src, String des, LocalDate dep_date);
+
+    @Query( select+" WHERE (t.from_source LIKE CONCAT(:src, '%') AND t.to_destination LIKE CONCAT(:des, '%')) AND t.departure_date = :localDate AND t.total_seats - t.available_seats > 0")
+    List<Trains> getTrainsWithSrcDesDateDynamic(String src, String des, LocalDate localDate);
 }

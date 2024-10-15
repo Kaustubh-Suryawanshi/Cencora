@@ -4,6 +4,8 @@ import { useState } from "react";
 import axios from "axios";
 import { TrainContext } from "../Context/TrainContext";
 import { useNavigate } from "react-router-dom";
+import { useEffect } from "react";
+import '../styles/Dashboard.css'
 const SearchTrainsComponent = () => {
   const { setTrains } = useContext(TrainContext);
   const { role } = useContext(UserContext);
@@ -15,47 +17,53 @@ const SearchTrainsComponent = () => {
   const nav = useNavigate();
   const handleSubmit = (e) => {
     e.preventDefault();
-    // console.log("Details Submitted:");
-    // You can handle API calls or form submission logic here
+
     axios
       .get(
         `http://localhost:8081/trains/search?src=${src}&des=${des}&date=${date}`
       )
       .then((response) => {
         setTrains(response.data);
-        console.log(response.data);
-        if (role == "passenger") nav("/user/trains");
-        else if (role == "admin") nav("/admin/trains");
+
+        nav("/trains")
       })
       .catch(console.error());
   };
 
+  const [minDate, setMinDate] = useState("");
+  useEffect(() => {
+
+    const today = new Date();
+    const day = String(today.getDate()).padStart(2, "0");
+    const month = String(today.getMonth() + 1).padStart(2, "0"); // January is 0!
+    const year = today.getFullYear();
+    const formattedDate = `${year}-${month}-${day}`;
+    setMinDate(formattedDate);
+  }, []);
+
+
   const handleSubmitByname = (e) => {
     e.preventDefault();
-    // console.log("Details Submitted:");
-    // You can handle API calls or form submission logic here
     axios
       .get(`http://localhost:8081/trains/search/trainbyname?name=${name}`)
       .then((response) => {
         setTrains(response.data);
         console.log(response.data);
-        if (role == "passenger") nav("/user/trains");
-        else if (role == "admin") nav("/admin/trains");
+        nav("/trains")
       })
       .catch(console.error());
   };
 
   const handleSubmitByNumber = (e) => {
     e.preventDefault();
-    // console.log("Details Submitted:");
-    // You can handle API calls or form submission logic here
+  
     axios
       .get(`http://localhost:8081/trains/search/trainbynumber?number=${number}`)
       .then((response) => {
         setTrains(response.data);
         console.log(response.data);
-        if (role == "passenger") nav("/user/trains");
-        else if (role == "admin") nav("/admin/trains");
+  
+        nav("/trains")
       })
       .catch(console.error());
   };
@@ -95,6 +103,7 @@ const SearchTrainsComponent = () => {
                 onChange={(e) => {
                   setDate(e.target.value);
                 }}
+                min={minDate}
               />
             </div>
             <button

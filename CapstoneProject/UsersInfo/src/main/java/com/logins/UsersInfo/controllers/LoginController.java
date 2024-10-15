@@ -29,13 +29,15 @@ public class LoginController {
     //add new user
     @PostMapping("/register")
     public ResponseEntity<UserResponse>  addNewuser(@RequestBody User user){
+
 //        validtion that user is new
-        return ResponseEntity.status(HttpStatus.CREATED).body(userService.addUserDetails(user));
+        UserResponse res=userService.addUserDetails(user);
+        return ResponseEntity.status(HttpStatus.CREATED).body(res==null?null:res);
     }
 
 //    get user by id
     @GetMapping("/getUser/{id}")
-    public  ResponseEntity<UserResponse> getSingleUserDetails(@PathVariable("id") int id){
+    public  ResponseEntity<UserResponse> getSingleUserDetails(@PathVariable int id){
         UserResponse userResponse=userService.getSingleuserById(id);
         return ResponseEntity.status(HttpStatus.CREATED).body(userResponse);
     }

@@ -34,7 +34,11 @@ public class UserService {
     }*/
 
     public UserResponse addUserDetails(User user){
-        User userRes= userRepo.save(user);
+        User userRes;
+        if(userRepo.findByEmail(user.getEmail()) != null){
+            return null;
+        }
+        userRes= userRepo.save(user);
         return modelMapper.map(userRes, UserResponse.class);
     }
 
