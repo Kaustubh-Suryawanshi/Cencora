@@ -6,25 +6,23 @@ const Homepage = () => {
   return (
     <>
       <main>
-        <div class="intro">
-          <h1>Nobel Trains</h1>
-          <p>Welcome TO OUR Train BOOKING SYSTEM</p>
+        <div className="intro">
+          <h1>Spartan Trains</h1>
+          <p>Welcome to our Train Booking System</p>
         </div>
-        <div class="about-me">
-          <div class="about-me-text">
+        <div className="about-me">
+          <div className="about-me-text">
             <h2>Why NobelTrains</h2>
             <p>
-              spartan bus is India's largest brand for online bus ticket booking
-              and offers an easy-to-use online bus and train ticket booking;
-              with over 36 million satisfied customers, 3500+ bus operators to
-              choose from, and plenty of offers on bus ticket booking, spartan
-              bus makes road journeys super convenient for travellers. A leading
-              platform for booking bus tickets, spartan bus has been the leader
-              in online bus booking over the past 17 years across thousands of
-              cities and lakhs of routes in India.
+              Spartan Trains offers a seamless experience for booking train tickets across India. 
+              With thousands of routes and a user-friendly platform, we make train journeys 
+              more accessible for everyone. Our system is trusted by millions for its reliability, 
+              safety, and convenience, ensuring that passengers can book tickets with ease and 
+              comfort. Enjoy special discounts, real-time tracking, and 24/7 customer support to 
+              make your travel plans smooth and hassle-free.
             </p>
           </div>
-          <img src={logo} alt="me" />
+          <img src={logo} alt="Nobel Trains Logo" />
         </div>
       </main>
     </>

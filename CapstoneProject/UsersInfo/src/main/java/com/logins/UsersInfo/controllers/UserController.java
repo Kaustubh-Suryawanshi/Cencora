@@ -19,13 +19,6 @@ public class UserController {
     @Autowired
     private UserService userService;
 
-//    Optional.....
-    /*@GetMapping("/booking/details/{user_id}")
-    public ResponseEntity<Mono<List<BookingResponse>>> getBookingDetailsByUserId(@PathVariable int user_id){
-        UserResponseWithBooking userResponseWithBooking= userService.getBookingDetailsByUserId(user_id);
-        return ResponseEntity.status(HttpStatus.CREATED).body( userResponseWithBooking.getBookingResponseList());
-    }*/
-
     @PostMapping("/booking/add/{user_id}")
     public String addBookingDetails(@PathVariable int user_id,@RequestBody BookingDTO bookingDTO){
         if(userService.addBookingDetails(user_id,bookingDTO)!=null){

@@ -3,6 +3,7 @@ import React, { useEffect, useContext, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { TrainContext } from "../Context/TrainContext";
 import '../styles/Updateform.css'; // Import your CSS file
+import { toast, ToastContainer } from "react-toastify";
 
 const UpdateTrainForm = () => {
   const { setTrains } = useContext(TrainContext);
@@ -67,6 +68,10 @@ const UpdateTrainForm = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    if (formData.total_seats < formData.available_seats) {
+      toast.error("total_seats should be greater than available seats");
+      return;
+    }
     axios
       .patch(`http://localhost:8081/admin/update/${tid}`, formData)
       .then((res) => {
@@ -215,6 +220,7 @@ const UpdateTrainForm = () => {
          
         </div>
       </form>
+      <ToastContainer/>
     </div>
   );
 };

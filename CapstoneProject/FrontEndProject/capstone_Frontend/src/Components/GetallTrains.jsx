@@ -7,7 +7,7 @@ import TrainList from "./TrainList";
 
 const GetallTrains = () => {
   const { trains, setTrains } = useContext(TrainContext);
-  const { userID,userName } = useContext(UserContext);
+  const { userID,role } = useContext(UserContext);
   const nav = useNavigate();
   useEffect(() => {
     const fetchUser = async () => {
@@ -47,7 +47,7 @@ const GetallTrains = () => {
         >
           <button
             onClick={() => {
-              if (userName === "admin") nav("/admin/addtrain");
+              if (role === "admin") nav("/admin/addtrain");
               else nav("/login");
             }}
             style={addButtonStyle}

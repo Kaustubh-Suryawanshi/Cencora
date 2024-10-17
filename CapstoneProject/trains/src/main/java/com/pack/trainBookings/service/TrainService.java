@@ -115,14 +115,4 @@ public class TrainService {
         return null;
 
     }
-
-    public List<TrainResponse> getTrainsUsingSrcDesDynamic(String src, String des, LocalDate localDate) {
-        List<Trains> response=trainRepo.getTrainsWithSrcDesDateDynamic( src,  des,  localDate);
-        List<TrainResponse> trainResponseList =new ArrayList<>();
-        for(Trains t:response){
-            TrainResponse trainResponse =modelMapper.map(t, TrainResponse.class);
-            trainResponseList.add(trainResponse);
-        }
-        return trainResponseList;
-    }
 }

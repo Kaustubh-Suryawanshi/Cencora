@@ -13,18 +13,14 @@ import java.util.List;
 public interface TrainRepo extends JpaRepository<Trains,Integer> {
     String select="select t from Trains t";
 
-    @Query(select +" WHERE (t.from_source = :src)" +"AND (t.to_destination = :des) " +"AND t.departure_date = :dep_date")
-    List<Trains> getTrainsWithSrcDesDate(String src, String des, LocalDate dep_date);
 
-    @Query(select +" WHERE t.train_name=:name")
+    @Query(select +" WHERE t.train_name=:name AND t.total_seats >= t.available_seats")
     List<Trains> getTrainsWithName(@Param("name") String name);
 
-    @Query(select +" WHERE t.train_no=:number")
+    @Query(select +" WHERE t.train_no=:number AND t.total_seats >= t.available_seats")
     List<Trains> getTrainsWithNumber(String number);
 
-    @Query(select +" Where (t.from_source = :src) AND (t.to_destination = :des)  AND t.departure_date = :dep_date AND t.total_seats > t.available_seats")
+    @Query(select +" Where (t.from_source = :src) AND (t.to_destination = :des)  AND t.departure_date = :dep_date AND t.total_seats >= t.available_seats")
     List<Trains> getTrainsWithSrcDesDateAdmin(String src, String des, LocalDate dep_date);
 
-    @Query( select+" WHERE (t.from_source LIKE CONCAT(:src, '%') AND t.to_destination LIKE CONCAT(:des, '%')) AND t.departure_date = :localDate AND t.total_seats - t.available_seats > 0")
-    List<Trains> getTrainsWithSrcDesDateDynamic(String src, String des, LocalDate localDate);
 }

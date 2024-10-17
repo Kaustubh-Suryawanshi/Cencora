@@ -37,13 +37,7 @@ public class TrainController {
            return ResponseEntity.status(HttpStatus.CREATED).body(trainResponse);
         }
 
-    @GetMapping("/dynamicsearch")
-    public ResponseEntity<List<TrainResponse>> getDetailsDynamically(@RequestParam String src, @RequestParam String des, @RequestParam String date){
-        LocalDate localDate= LocalDate.parse(date);
-        List<TrainResponse> trainResponse =trainService.getTrainsUsingSrcDesDynamic(src,des,localDate);
-        if(trainResponse.size()==0) return null;
-        return ResponseEntity.status(HttpStatus.CREATED).body(trainResponse);
-    }
+
 
 
 
